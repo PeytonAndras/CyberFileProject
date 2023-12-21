@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        /**/
+    </style>
+</body>
+<h1>Home</h1>
+<form action="/uploadFile" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="Upload">
+</form>
+
+<form action="/deleteFile" method="post">
+    <input type="text" placeholder="Enter file name" name="fileName">
+    <input type="submit" value="Delete">
+</form>
+
+<form action="/downloadFile/" method="get">
+    <input type="text" placeholder="Enter file name" name="fileName">
+    <input type="submit" value="Download">
+</form>
+<p action="/list" method="get">This should be list</p>
+<ul id="fileList"></ul>
+<script>
+  // Fetch the list of files from the server
+  fetch('/files')
+    .then(response => response.json())
+    .then(files => {
+      // Update the fileList element with the list of files
+      const fileListElement = document.getElementById('fileList');
+      files.forEach(file => {
+        const listItem = document.createElement('li');
+        listItem.textContent = file.fileName; // Use the correct attribute for file name
+        fileListElement.appendChild(listItem);
+      });
+    })
+    .catch(error => console.error('Error fetching file list:', error));
+</script>
+</html>
